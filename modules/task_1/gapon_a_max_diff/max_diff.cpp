@@ -31,13 +31,18 @@ int sequential_search(std::vector<int> vec) {
 }
 
 int parallel_search(std::vector<int> vec) {
-    int vector_size = static_cast<int>(vec.size());
-    if (vector_size < 2) {
-        throw "Error size vector";
-    }
     int size, rank;
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    int vector_size = 0;
+    if (rank == 0) {
+        vector_size = static_cast<int>(vec.size());
+    }
+    MPI_Bcast(&vector_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    if (vector_size < 2) {
+        throw "Error size vector";
+    }
+    
     int delta = (vector_size - 1) / size;
     int remainder = (vector_size - 1) % size;
     std::vector<int> loc_vec;
