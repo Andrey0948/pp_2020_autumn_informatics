@@ -9,7 +9,7 @@ TEST(MAX_DIFF_IN_VECTOR_MPI, INCORRECT_SIZE) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     int vector_size = 1;
-    std::vector<int> vec(vector_size);
+    std::vector<int> vec;
 
     if (rank == 0)
         vec = random_vector(vector_size);
@@ -21,7 +21,7 @@ TEST(MAX_DIFF_IN_VECTOR_MPI, SIZE_3) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     int vector_size = 3;
-    std::vector<int> vec(vector_size);
+    std::vector<int> vec;
 
     if (rank == 0)
         vec = random_vector(vector_size);
@@ -38,7 +38,7 @@ TEST(MAX_DIFF_IN_VECTOR_MPI, SIZE_50) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     int vector_size = 50;
-    std::vector<int> vec(vector_size);
+    std::vector<int> vec;
 
     if (rank == 0)
         vec = random_vector(vector_size);
@@ -55,7 +55,7 @@ TEST(MAX_DIFF_IN_VECTOR_MPI, SIZE_500) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     int vector_size = 500;
-    std::vector<int> vec(vector_size);
+    std::vector<int> vec;
 
     if (rank == 0)
         vec = random_vector(vector_size);
@@ -72,7 +72,7 @@ TEST(MAX_DIFF_IN_VECTOR_MPI, SIZE_5000) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     int vector_size = 5000;
-    std::vector<int> vec(vector_size);
+    std::vector<int> vec;
 
     if (rank == 0)
         vec = random_vector(vector_size);
