@@ -4,7 +4,6 @@
 #include <gtest/gtest.h>
 #include <iostream>
 #include <vector>
-#include <chrono>
 #include "./gather.h"
 
 
@@ -17,8 +16,10 @@ TEST(Lab2, Test_Float) {
     std::vector<float> vec = ArrFloat(num);
     std::vector<float> rbuf(size * num);
     std::vector<float> mybuf(size * num);
-    Gather(vec.data(), num, MPI_FLOAT, mybuf.data(), num, MPI_FLOAT, root, MPI_COMM_WORLD);
-    MPI_Gather(vec.data(), num, MPI_FLOAT, rbuf.data(), num, MPI_FLOAT, root, MPI_COMM_WORLD);
+    Gather(vec.data(), num, MPI_FLOAT, mybuf.data(),
+        num, MPI_FLOAT, root, MPI_COMM_WORLD);
+    MPI_Gather(vec.data(), num, MPI_FLOAT, rbuf.data(),
+        num, MPI_FLOAT, root, MPI_COMM_WORLD);
     if (rank == root) {
         ASSERT_EQ(mybuf, rbuf);
     }
@@ -33,8 +34,10 @@ TEST(Lab2, Test_Double) {
     std::vector<double> vec = ArrDouble(num);
     std::vector<double> rbuf(size* num);
     std::vector<double> mybuf(size* num);
-    Gather(vec.data(), num, MPI_DOUBLE, mybuf.data(), num, MPI_DOUBLE, root, MPI_COMM_WORLD);
-    MPI_Gather(vec.data(), num, MPI_DOUBLE, rbuf.data(), num, MPI_DOUBLE, root, MPI_COMM_WORLD);
+    Gather(vec.data(), num, MPI_DOUBLE, mybuf.data(),
+        num, MPI_DOUBLE, root, MPI_COMM_WORLD);
+    MPI_Gather(vec.data(), num, MPI_DOUBLE, rbuf.data(),
+        num, MPI_DOUBLE, root, MPI_COMM_WORLD);
     if (rank == root) {
         ASSERT_EQ(mybuf, rbuf);
     }
@@ -50,22 +53,24 @@ TEST(Lab2, Test_int_time) {
     std::vector<int> vec = ArrInt(num);
     std::vector<int> rbuf(size * num);
     std::vector<int> mybuf(size * num);
-    auto start = std::chrono::steady_clock::now();
-    Gather(vec.data(), num, MPI_INT, mybuf.data(), num, MPI_INT, root, MPI_COMM_WORLD);
-    auto end = std::chrono::steady_clock::now();
-    std::chrono::duration<double> my_timer = end - start;
-    auto start_mpi = std::chrono::steady_clock::now();
-    MPI_Gather(vec.data(), num, MPI_INT, rbuf.data(), num, MPI_INT, root, MPI_COMM_WORLD);
-    auto end_mpi = std::chrono::steady_clock::now();
-    std::chrono::duration<double> mpi_timer = end_mpi - start_mpi;
-    if (rank == root)
-    {
+    // auto start = std::chrono::steady_clock::now();
+    Gather(vec.data(), num, MPI_INT, mybuf.data(),
+        num, MPI_INT, root, MPI_COMM_WORLD);
+    // auto end = std::chrono::steady_clock::now();
+    // std::chrono::duration<double> my_timer = end - start;
+    // auto start_mpi = std::chrono::steady_clock::now();
+    MPI_Gather(vec.data(), num, MPI_INT, rbuf.data(),
+        num, MPI_INT, root, MPI_COMM_WORLD);
+    // auto end_mpi = std::chrono::steady_clock::now();
+    // std::chrono::duration<double> mpi_timer = end_mpi - start_mpi;
+    if (rank == root) {
         ASSERT_EQ(mybuf, rbuf);
     }
     if (rank == root) {
-        std::cout << "MPI guther runtime: " << mpi_timer.count() << std::endl;
-        std::cout << "MPI guther runtime: " << my_timer.count() << std::endl;
-
+        // std::cout << "MPI guther runtime: "
+        // << mpi_timer.count() << std::endl;
+        // std::cout << "MPI guther runtime: "
+        // << my_timer.count() << std::endl;
     }
 }
 
@@ -78,22 +83,24 @@ TEST(Lab2, Test_double_time) {
     std::vector<double> vec = ArrDouble(num);
     std::vector<double> rbuf(size * num);
     std::vector<double> mybuf(size * num);
-    auto start_2 = std::chrono::steady_clock::now();
-    Gather(vec.data(), num, MPI_DOUBLE, mybuf.data(), num, MPI_DOUBLE, root, MPI_COMM_WORLD);
-    auto end_2 = std::chrono::steady_clock::now();
-    std::chrono::duration<double> my_timer = end_2 - start_2;
-    auto start_mpi_2 = std::chrono::steady_clock::now();
-    MPI_Gather(vec.data(), num, MPI_DOUBLE, rbuf.data(), num, MPI_DOUBLE, root, MPI_COMM_WORLD);
-    auto end_mpi_2 = std::chrono::steady_clock::now();
-    std::chrono::duration<double> mpi_timer = end_mpi_2 - start_mpi_2;
-    if (rank == root)
-    {
+    // auto start_2 = std::chrono::steady_clock::now();
+    Gather(vec.data(), num, MPI_DOUBLE, mybuf.data(),
+        num, MPI_DOUBLE, root, MPI_COMM_WORLD);
+    // auto end_2 = std::chrono::steady_clock::now();
+    // std::chrono::duration<double> my_timer = end_2 - start_2;
+    // auto start_mpi_2 = std::chrono::steady_clock::now();
+    MPI_Gather(vec.data(), num, MPI_DOUBLE, rbuf.data(),
+        num, MPI_DOUBLE, root, MPI_COMM_WORLD);
+    // auto end_mpi_2 = std::chrono::steady_clock::now();
+    // std::chrono::duration<double> mpi_timer = end_mpi_2 - start_mpi_2;
+    if (rank == root) {
         ASSERT_EQ(mybuf, rbuf);
     }
     if (rank == root) {
-        std::cout << "MPI guther runtime: " << mpi_timer.count() << std::endl;
-        std::cout << "MPI guther runtime: " << my_timer.count() << std::endl;
-       
+        // std::cout << "MPI guther runtime: "
+        // << mpi_timer.count() << std::endl;
+        // std::cout << "MPI guther runtime: "
+        // << my_timer.count() << std::endl;
     }
 }
 

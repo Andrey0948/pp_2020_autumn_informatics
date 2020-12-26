@@ -25,8 +25,8 @@ std::vector<float> ArrFloat(int size) {
     gen.seed(static_cast<unsigned int>(time(0)));
 
     std::vector<float> array(size);
-    for (auto itr_float = array.begin(); itr_float != array.end(); itr_float++) {
-        *itr_float = ((gen() % 200) / 10.0);
+    for (auto itr_fl = array.begin(); itr_fl != array.end(); itr_fl++) {
+        *itr_fl = ((gen() % 200) / 10.0);
     }
 
     return array;
@@ -37,15 +37,16 @@ std::vector<double> ArrDouble(int size) {
     gen.seed(static_cast<unsigned int>(time(0)));
 
     std::vector<double> array(size);
-    for (auto itr_double = array.begin(); itr_double != array.end(); itr_double++) {
-      *itr_double = ((gen() % 200) / 10.0) ;
+    for (auto itr_d = array.begin(); itr_d != array.end(); itr_d++) {
+      *itr_d = ((gen() % 200) / 10.0);
     }
 
     return array;
 }
 
 int Gather(void *sendbuf, int sendcount, MPI_Datatype sendtype,
-    void *recbuf, int recvcount, MPI_Datatype recvtype, int root, MPI_Comm comm) {
+    void *recbuf, int recvcount, MPI_Datatype recvtype,
+    int root, MPI_Comm comm) {
     int size, rank;
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -62,10 +63,12 @@ int Gather(void *sendbuf, int sendcount, MPI_Datatype sendtype,
         for (int j = 0; j < size; j++) {
             if (j != root) {
                 MPI_Status status;
-                MPI_Recv((char*)(recbuf) + recvcount * rec_type_size * j, recvcount,
+                MPI_Recv(reinterpret_cast<char*>(recbuf) + recvcount *
+                    rec_type_size * j, recvcount,
                     recvtype, j, 0, comm, &status);
             } else {
-                std::memcpy((char*)(recbuf) + recvcount * rec_type_size * root,
+                std::memcpy(reinterpret_cast<char*>(recbuf) +
+                    recvcount * rec_type_size * root,
                     sendbuf, sendcount* send_type_size);
             }
         }
